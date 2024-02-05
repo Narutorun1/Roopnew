@@ -2,7 +2,7 @@
 
 numpy==1.24.3
 opencv-python==4.8.0.74
-onnx==1.15
+onnx==1.14
 insightface==0.7.3
 psutil==5.9.5
 tk==0.1.0
@@ -14,7 +14,7 @@ onnxruntime==1.15.1; python_version != '3.10' and sys_platform == 'darwin' and p
 onnxruntime-coreml==1.13.1; python_version == '3.10' and sys_platform == 'darwin' and platform_machine != 'arm64'
 onnxruntime-silicon==1.13.1; sys_platform == 'darwin' and platform_machine == 'arm64'
 onnxruntime-gpu==1.15; sys_platform != 'darwin'
-tensorflow==2.15.0
+tensorflow==2.13.0
 opennsfw2==0.10.2
 protobuf==4.23.4
 tqdm==4.65.0
