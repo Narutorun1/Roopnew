@@ -14,7 +14,7 @@ import signal
 import shutil
 import argparse
 import onnxruntime
-import tensorflow
+import pathlib
 import roop.globals
 import roop.metadata
 import roop.ui as ui
