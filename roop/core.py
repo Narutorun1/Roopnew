@@ -226,10 +226,10 @@ def start() -> None:
     if roop.globals.keep_fps:
         fps = detect_fps(roop.globals.target_path)
         update_status(f'Creating gif with {fps} FPS...')
-        create_gif(roop.globals.target_path, fps)
+        create_video(roop.globals.target_path, fps)
     else:
         update_status('Creating gif with 30 FPS...')
-        create_gif(roop.globals.target_path)
+        create_video(roop.globals.target_path)
     # handle audio
     if roop.globals.skip_audio:
         move_temp(roop.globals.target_path, roop.globals.output_path)
