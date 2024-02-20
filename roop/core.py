@@ -18,9 +18,9 @@ import tensorflow
 import roop.globals
 import roop.metadata
 import roop.ui as ui
-from roop.predictor import predict_image, predict_video, predict_gif
+from roop.predictor import predict_image, predict_gif, predict_video,
 from roop.processors.frame.core import get_frame_processors_modules
-from roop.utilities import has_image_extension, has_gif_extension, is_image, is_video, is_gif, detect_fps, create_video, extract_frames, get_temp_frame_paths, restore_audio, create_temp, move_temp, clean_temp, normalize_output_path
+from roop.utilities import has_image_extension, has_gif_extension, is_image, is_gif, is_video, detect_fps, create_video, extract_frames, get_temp_frame_paths, restore_audio, create_temp, move_temp, clean_temp, normalize_output_path
 
 warnings.filterwarnings('ignore', category=FutureWarning, module='insightface')
 warnings.filterwarnings('ignore', category=UserWarning, module='torchvision')
@@ -144,6 +144,22 @@ def start() -> None:
             frame_processor.post_process()
         # validate image
         if is_image(roop.globals.target_path):
+            update_status('Processing to image succeed!')
+        else:
+            update_status('Processing to image failed!')
+        return
+        # image to gif
+        if has_gif_extension(roop.globals.target_path):
+        if predict_gif(roop.globals.target_path):
+            destroy()
+        shutil.copy2(roop.globals.target_path, roop.globals.output_path)
+        # process frame
+        for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
+            update_status('Progressing...', frame_processor.NAME)
+            frame_processor.process_gif(roop.globals.source_path, roop.globals.output_path, roop.globals.output_path)
+            frame_processor.post_process()
+        # validate gif
+        if is_gif(roop.globals.target_path):
             update_status('Processing to image succeed!')
         else:
             update_status('Processing to image failed!')
