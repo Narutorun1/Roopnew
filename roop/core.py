@@ -187,30 +187,7 @@ def start() -> None:
     else:
         update_status('Frames not found...')
         return
-        # process image to gif
-        if predict_gif(roop.globals.target_path):
-            destroy()
-    update_status('Creating temporary resources...')
-    create_temp(roop.globals.target_path)
-    # extract frames
-    if roop.globals.keep_fps:
-        fps = detect_fps(roop.globals.target_path)
-        update_status(f'Extracting frames with {fps} FPS...')
-        extract_frames(roop.globals.target_path, fps)
-    else:
-        update_status('Extracting frames with 30 FPS...')
-        extract_frames(roop.globals.target_path)
-    # process frame
-    temp_frame_paths = get_temp_frame_paths(roop.globals.target_path)
-    if temp_frame_paths:
-        for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
-            update_status('Progressing...', frame_processor.NAME)
-            frame_processor.process_video(roop.globals.source_path, temp_frame_paths)
-            frame_processor.post_process()
-    else:
-        update_status('Frames not found...')
-        return
-
+        
     
     # create video
     if roop.globals.keep_fps:
