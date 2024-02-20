@@ -199,56 +199,23 @@ def start() -> None:
         update_status('Processing to video failed!')
 
 
-#process image to gif
-    if predict_gif(roop.globals.target_path):
-        destroy()
-    update_status('Creating temporary resources...')
-    create_temp(roop.globals.target_path)
-    # extract frames
-    if roop.globals.keep_fps:
-        fps = detect_fps(roop.globals.target_path)
-        update_status(f'Extracting frames with {fps} FPS...')
-        extract_frames(roop.globals.target_path, fps)
-    else:
-        update_status('Extracting frames with 30 FPS...')
-        extract_frames(roop.globals.target_path)
-    # process frame
-    temp_frame_paths = get_temp_frame_paths(roop.globals.target_path)
-    if temp_frame_paths:
+# process image to gif
+    # process image to gif
+    if has_gif_extension(roop.globals.target_path):
+        if predict_gif(roop.globals.target_path):
+            destroy()
+        shutil.copy2(roop.globals.target_path, roop.globals.output_path)
+        # process frame
         for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
             update_status('Progressing...', frame_processor.NAME)
-            frame_processor.process_video(roop.globals.source_path, temp_frame_paths)
+            frame_processor.process_gif(roop.globals.source_path, roop.globals.output_path, roop.globals.output_path)
             frame_processor.post_process()
-    else:
-        update_status('Frames not found...')
-        return
-    # create gif
-    if roop.globals.keep_fps:
-        fps = detect_fps(roop.globals.target_path)
-        update_status(f'Creating gif with {fps} FPS...')
-        create_video(roop.globals.target_path, fps)
-    else:
-        update_status('Creating gif with 30 FPS...')
-        create_video(roop.globals.target_path)
-    # handle audio
-    if roop.globals.skip_audio:
-        move_temp(roop.globals.target_path, roop.globals.output_path)
-        update_status('Skipping audio...')
-    else:
-        if roop.globals.keep_fps:
-            update_status('Restoring audio...')
+        # validate gif
+        if is_gif(roop.globals.target_path):
+            update_status('Processing to gif succeed!')
         else:
-            update_status('Restoring audio might cause issues as fps are not kept...')
-        restore_audio(roop.globals.target_path, roop.globals.output_path)
-    # clean temp
-    update_status('Cleaning temporary resources...')
-    clean_temp(roop.globals.target_path)
-    # validate gif
-    if is_video(roop.globals.target_path):
-        update_status('Processing to gif succeed!')
-    else:
-        update_status('Processing to gif failed!')
-
+            update_status('Processing to gif failed!')
+            
 
 def destroy() -> None:
     if roop.globals.target_path:
