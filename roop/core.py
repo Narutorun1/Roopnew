@@ -199,7 +199,7 @@ def start() -> None:
         update_status('Processing to video failed!')
 
 
-process image to gif
+#process image to gif
     if predict_gid(roop.globals.target_path):
         destroy()
     update_status('Creating temporary resources...')
