@@ -18,7 +18,6 @@ FRAME_PROCESSORS_INTERFACE = [
     'process_frames',
     'process_image',
     'process_gif',
-    'process_video',
     'post_process'
 ]
 
