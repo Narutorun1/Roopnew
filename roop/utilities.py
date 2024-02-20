@@ -133,6 +133,13 @@ def is_video(video_path: str) -> bool:
     return False
 
 
+def is_gif(gif_path: str) -> bool:
+    if gif_path and os.path.isfile(gif_path):
+        mimetype, _ = mimetypes.guess_type(gif_path)
+        return bool(mimetype and mimetype.startswith('gif/'))
+    return False
+
+
 def conditional_download(download_directory_path: str, urls: List[str]) -> None:
     if not os.path.exists(download_directory_path):
         os.makedirs(download_directory_path)
