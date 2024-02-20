@@ -150,7 +150,7 @@ def start() -> None:
         return
         # image to gif
         if has_gif_extension(roop.globals.target_path):
-        if predict_gif(roop.globals.target_path):
+             if predict_gif(roop.globals.target_path):
             destroy()
         shutil.copy2(roop.globals.target_path, roop.globals.output_path)
         # process frame
