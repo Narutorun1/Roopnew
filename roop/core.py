@@ -243,8 +243,8 @@ def start() -> None:
     # clean temp
     update_status('Cleaning temporary resources...')
     clean_temp(roop.globals.target_path)
-    # validate video
-    if is_gif(roop.globals.target_path):
+    # validate gif
+    if is_video(roop.globals.target_path):
         update_status('Processing to gif succeed!')
     else:
         update_status('Processing to gif failed!')
