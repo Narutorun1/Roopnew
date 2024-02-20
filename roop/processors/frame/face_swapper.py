@@ -81,5 +81,5 @@ def process_image(source_path: str, target_path: str, output_path: str) -> None:
     cv2.imwrite(output_path, result)
 
 
-def process_video(source_path: str, temp_frame_paths: List[str]) -> None:
-    roop.processors.frame.core.process_video(source_path, temp_frame_paths, process_frames)
+def process_gif(source_path: str, temp_frame_paths: List[str]) -> None:
+    roop.processors.frame.core.process_gif(source_path, temp_frame_paths, process_frames)
