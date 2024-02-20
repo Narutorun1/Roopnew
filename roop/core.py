@@ -171,6 +171,24 @@ def start() -> None:
     else:
         update_status('Frames not found...')
         return
+        # process image to gif
+    if has_gif_extension(roop.globals.target_path):
+        if predict_gif(roop.globals.target_path):
+            destroy()
+        shutil.copy2(roop.globals.target_path, roop.globals.output_path)
+        # process frame
+        for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
+            update_status('Progressing...', frame_processor.NAME)
+            frame_processor.process_gif(roop.globals.source_path, roop.globals.output_path, roop.globals.output_path)
+            frame_processor.post_process()
+        # validate gif
+        if is_gif(roop.globals.target_path):
+            update_status('Processing to gif succeed!')
+        else:
+            update_status('Processing to gif failed!')
+            return
+
+    
     # create video
     if roop.globals.keep_fps:
         fps = detect_fps(roop.globals.target_path)
@@ -197,24 +215,6 @@ def start() -> None:
         update_status('Processing to video succeed!')
     else:
         update_status('Processing to video failed!')
-
-
-# process image to gif
-    # process image to gif
-    if has_gif_extension(roop.globals.target_path):
-        if predict_gif(roop.globals.target_path):
-            destroy()
-        shutil.copy2(roop.globals.target_path, roop.globals.output_path)
-        # process frame
-        for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
-            update_status('Progressing...', frame_processor.NAME)
-            frame_processor.process_gif(roop.globals.source_path, roop.globals.output_path, roop.globals.output_path)
-            frame_processor.post_process()
-        # validate gif
-        if is_gif(roop.globals.target_path):
-            update_status('Processing to gif succeed!')
-        else:
-            update_status('Processing to gif failed!')
             
 
 def destroy() -> None:
