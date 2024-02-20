@@ -17,6 +17,7 @@ FRAME_PROCESSORS_INTERFACE = [
     'process_frame',
     'process_frames',
     'process_image',
+    'process_gif',
     'process_video',
     'post_process'
 ]
@@ -72,7 +73,7 @@ def pick_queue(queue: Queue[str], queue_per_future: int) -> List[str]:
     return queues
 
 
-def process_video(source_path: str, frame_paths: list[str], process_frames: Callable[[str, List[str], Any], None]) -> None:
+def process_gif(source_path: str, frame_paths: list[str], process_frames: Callable[[str, List[str], Any], None]) -> None:
     progress_bar_format = '{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}{postfix}]'
     total = len(frame_paths)
     with tqdm(total=total, desc='Processing', unit='frame', dynamic_ncols=True, bar_format=progress_bar_format) as progress:
