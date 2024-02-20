@@ -133,8 +133,15 @@ def is_video(video_path: str) -> bool:
     return False
 
 
-def has_image_extension(image_path: str) -> bool:
-    return image_path.lower().endswith(('gif'))
+def has_gif_extension(gif_path: str) -> bool:
+    return gif_path.lower().endswith(('gif'))
+
+
+def is_gif(gif_path: str) -> bool:
+    if gif_path and os.path.isfile(gif_path):
+        mimetype, _ = mimetypes.guess_type(gif_path)
+        return bool(mimetype and mimetype.startswith('gif/'))
+    return False
 
 
 
