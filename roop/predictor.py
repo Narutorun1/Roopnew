@@ -44,4 +44,4 @@ def predict_video(target_path: str) -> bool:
 
 
 def predict_gif(target_path: str) -> bool:
-    return opennsfw2.predict_gif(target_path) > MAX_PROBABILITY
+    return opennsfw2.predict_gifimage(target_path) > MAX_PROBABILITY
